@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Button, Vibration, Alert } from 'react-native';
-import Constants from 'expo-constants';
+import { Text, View, StyleSheet, Button, Vibration, Alert, TextInput } from 'react-native';
 
 export default class Timer extends React.Component {
   constructor(props) {
@@ -10,7 +9,14 @@ export default class Timer extends React.Component {
 
   defaultState = {
     mode: 'Work',
-    seconds: this.props.duration,
+    seconds: this.props.workTime,
+    running: false,
+    playButtonText: 'Start'
+  }
+
+  restDefaultState = {
+    mode: 'Rest',
+    seconds: this.props.restTime,
     running: false,
     playButtonText: 'Start'
   }
@@ -46,9 +52,9 @@ export default class Timer extends React.Component {
 
   switchMode = (mode) => {
     if (mode === 'Work') {
-      this.setState({mode: 'Rest'})
+      this.setState(this.restDefaultState)
     } else {
-      this.setState({mode: 'Work'})
+      this.setState(this.defaultState)
     }
   }
 
@@ -87,13 +93,6 @@ export default class Timer extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  },
   paragraph: {
     margin: 24,
     fontSize: 18,
