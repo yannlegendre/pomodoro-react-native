@@ -9,9 +9,16 @@ export default class TimerForm extends React.Component {
     }
   }
 
-  changeWorkTime = (workTime) => {
-    this.setState({workTime})
+  getHandler = key =>  val => {
+    this.setState({[key]: val})
   }
+
+  // avant d'utiliser directement gethandler
+  // changeWorkTime = this.getHandler('name')
+
+  // changeWorkTime = (workTime) => {
+  //   this.setState({workTime})
+  // }
 
   handleSubmit = () => {
     this.props.onSubmit(this.state)
@@ -26,7 +33,7 @@ export default class TimerForm extends React.Component {
           underlineColorAndroid='transparent'
           style={styles.TextInputStyle}
           keyboardType={'numeric'}
-          onChangeText={this.changeWorkTime}
+          onChangeText={this.getHandler('workTime')}
           value={this.state.workTime.toString()}
         />
         <Button title="submit" onPress={this.handleSubmit} />
@@ -43,7 +50,6 @@ const styles = StyleSheet.create({
       marginTop: 40
   },
     formContainer: {
-      width: 100,
       textAlign: 'center'
     },
 });

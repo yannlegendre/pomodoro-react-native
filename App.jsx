@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import Constants from 'expo-constants'
 import Timer from './timer'
 import TimerForm from './timer-form'
@@ -19,10 +19,10 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Timer workTime={this.state.workTime} />
         <TimerForm onSubmit={this.updateWorkTime}/>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
