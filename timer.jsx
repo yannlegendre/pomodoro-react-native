@@ -77,7 +77,7 @@ export default class Timer extends React.Component {
   }
 
   readableTime = (timeInSeconds) => {
-    const minutes = Math.floor(timeInSeconds / 60)
+    const minutes = Math.floor(Math.floor(timeInSeconds) / 60)
     let sec = timeInSeconds - minutes * 60
     if (sec < 10) sec = `0${sec}`
     return `${minutes}:${sec}`

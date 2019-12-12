@@ -6,19 +6,35 @@ export default class TimerForm extends React.Component {
     super(props)
     this.state = {
       workTime: '',
+      isFormValid: false
     }
   }
 
-  getHandler = key =>  val => {
-    this.setState({[key]: val})
-  }
+  // getHandler = key =>  val => {
+  //   this.setState({[key]: val})
+  // }
 
   // avant d'utiliser directement gethandler
   // changeWorkTime = this.getHandler('name')
 
-  // changeWorkTime = (workTime) => {
-  //   this.setState({workTime})
-  // }
+  handleWorkTimeChange = (input) => {
+    if (input === '' || /^\d+$/.test(input)) {
+      this.setState({workTime: input})
+    }
+  }
+
+  validateForm = () => {
+    if (this.state.workTime > 0) {
+      this.setState({isFormValid: true})
+    } else {
+      this.setState({isFormValid: false})
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.workTime !== prevState.workTime)
+      this.validateForm()
+  }
 
   handleSubmit = () => {
     this.props.onSubmit(this.state)
@@ -33,10 +49,10 @@ export default class TimerForm extends React.Component {
           underlineColorAndroid='transparent'
           style={styles.TextInputStyle}
           keyboardType={'numeric'}
-          onChangeText={this.getHandler('workTime')}
+          onChangeText={this.handleWorkTimeChange}
           value={this.state.workTime.toString()}
         />
-        <Button title="submit" onPress={this.handleSubmit} />
+        <Button title="submit" onPress={this.handleSubmit} disabled={!this.state.isFormValid}/>
       </View>
     )
   }
