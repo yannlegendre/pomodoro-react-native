@@ -16,9 +16,18 @@ export default class Timer extends React.Component {
 
   restDefaultState = {
     mode: 'Rest',
-    seconds: this.props.restTime,
+    seconds: 5*60,
     running: false,
     playButtonText: 'Start'
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.defaultState.seconds = nextProps.workTime
+    this.resetTimer()
+  }
+
+  componentWillUnmount= () => {
+    if (this.myInterval) clearInterval(this.myInterval)
   }
 
   handlePlayPause = () => {
@@ -76,7 +85,7 @@ export default class Timer extends React.Component {
 
   render() {
     return(
-      <View style={styles.container}>
+      <View>
         <Text style={styles.paragraph}>
           {`${this.state.mode} time !`}
         </Text>
@@ -107,7 +116,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 25,
-    marginLeft: 50,
-    marginRight: 50,
+  },
+  TextInputStyle: {
+      textAlign: 'center',
+      height: 40,
+      borderRadius: 10,
+      marginTop: 40
   },
 });
